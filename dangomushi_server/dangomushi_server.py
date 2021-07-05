@@ -8,13 +8,14 @@ from typing import Optional
 import json
 
 
-TEST = True
-
-
-if TEST:
-    from util.controller import TestController as Controller
-else:
+try:
+    import RPi.GPIO as GPIO
     from util.controller import Controller
+    TEST = False
+except:
+    print("module RPi.GPIO can't import")
+    from util.controller import TestController as Controller
+    TEST = True
 
 class ControlRequest(BaseModel):
     movement: Optional[int] # 0: stop, 1: forward, 2: backward, 3: rotate_right, 4: rotate_left
@@ -75,18 +76,23 @@ class App(FastAPI):
         
         return None
 
-app = App()
-
 if __name__ == '__main__':
     import uvicorn
     if TEST:
         host = "0.0.0.0"
     else:
-        host = "192.168.0.52"
-    uvicorn.run(
-        app=app, 
-        host=host, 
-        port=8000, 
-        log_config='log_config.json', 
-        access_log=False
-    )
+        host = "192.168.0.56"
+    try:
+        app=App()
+        uvicorn.run(
+            app=app, 
+            host=host, 
+            port=8000, 
+#            log_config='log_config.json', 
+#            access_log=False
+        )
+    except Exception as e:
+        print(e)
+    finally:
+        print("close app")
+        del app

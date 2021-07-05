@@ -1,0 +1,22 @@
+[Unit]
+Description=raspberry_pi_dangomushi_server_function
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/App/dangomushi/dangomushi/dangomushi_server/dangomushi_server.py
+Restart=always
+# Restart service after 10 seconds if node service crash
+RestartSec=10
+# Output to syslog
+StandardOutput=syslog
+# Output to syslog
+StandardError=syslog
+# SystemMaxUse=50M
+SyslogIdentifier=raspi_dangomushi
+WorkingDirectory=/home/pi/App/dangomushi/dangomushi/dangomushi_server/
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+
