@@ -38,6 +38,8 @@ class Client():
             movement = 3
         elif key == Key.left:
             movement = 4
+        elif key == Key.space:
+            movement = 0
         # request control ===========================
         if movement and (self.prev_movement != movement):
             if TEST:
