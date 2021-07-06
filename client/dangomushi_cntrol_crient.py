@@ -35,7 +35,9 @@ class Client():
             'Content-Type': 'application/json'
         }
         req = urllib.request.Request(url)
-        return res.read()
+        with urllib.request.urlopen(req) as res:
+            body = res.read()
+        return body
 
     def on_press(self, key):
 #        print(key)
