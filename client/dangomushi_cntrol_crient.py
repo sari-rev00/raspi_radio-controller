@@ -24,11 +24,30 @@ class Client():
         with urllib.request.urlopen(req) as res:
             body = res.read()
         return body
+    
+    def request_check(self):
+        if TEST:
+            url = "http://127.0.0.1:8000/"
+        else:
+            url = "http://192.168.0.56:8000/"
+        headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        req = urllib.request.Request(url)
+        return res.read()
 
     def on_press(self, key):
+#        print(key)
         # movement manegement =======================
         if key == Key.esc:
             raise StopApp(key)
+        if key == Key.f1:
+            print("server check")
+            try:
+                print(self.request_check())
+            except Exception as e:
+                print(e)
         movement = None
         if key == Key.up:
             movement = 1
@@ -78,6 +97,8 @@ class Client():
 
 if __name__ == '__main__':
     print("dangomushi control crient: start")
-    print("usage: up=forward, down=backward, right=rotate_right, left=rotate_left")
+    print(
+        "usage: f1=server_check, up=forward, down=backward, right=rotate_right, left=rotate_left"
+    )
     client = Client()
     client.loop()
