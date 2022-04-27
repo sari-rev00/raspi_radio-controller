@@ -17,12 +17,15 @@ except:
     from util.controller import TestController as Controller
     TEST = True
 
+
 class ControlRequest(BaseModel):
     movement: Optional[int] # 0: stop, 1: forward, 2: backward, 3: rotate_right, 4: rotate_left
     action: Optional[int]  # TBD
 
+
 class ControlResponse(BaseModel):
     message: str
+
 
 class App(FastAPI):
     def __init__(self):
@@ -75,6 +78,7 @@ class App(FastAPI):
             )
         
         return None
+
 
 if __name__ == '__main__':
     import uvicorn
